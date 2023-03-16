@@ -1,16 +1,15 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Account;
-import com.example.demo.entity.Book;
 import com.example.demo.entity.User;
 import com.example.demo.service.impl.UserServiceImpl;
-import org.hibernate.annotations.Check;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController("/User")
 public class UserController {
     private final UserServiceImpl userService;
@@ -61,7 +60,7 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @GetMapping("/User/checkUser")
+    @PostMapping("/User/checkUser")
     public ResponseEntity<User> checkUser(@RequestBody Account account) {
         User user = userService.checkUser(account);
         if (user == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

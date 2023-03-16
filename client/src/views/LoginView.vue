@@ -43,7 +43,6 @@ export default {
       fetch("http://localhost:8085/User/checkUser", {
         method: "POST",
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
