@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.Book;
 import com.example.demo.entity.User;
 import com.example.demo.service.impl.UserServiceImpl;
@@ -60,10 +61,10 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @GetMapping("/User/checkUser/{username}/{password}")
-    public ResponseEntity<Boolean> checkUser(@PathVariable(name = "username") String username, @PathVariable(name = "password") String password) {
-        Boolean checkUser = userService.checkUser(username, password);
-        if (checkUser == false) return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(true, HttpStatus.OK);
+    @GetMapping("/User/checkUser")
+    public ResponseEntity<User> checkUser(@RequestBody Account account) {
+        User user = userService.checkUser(account);
+        if (user == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

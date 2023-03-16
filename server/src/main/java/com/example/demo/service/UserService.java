@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public interface UserService {
 
     User deleteUser(Integer userID);
 
-    Boolean checkUser(String username, String password);
+    User checkUser(Account account);
 
     int getPageNumber(int pageSize);
 }

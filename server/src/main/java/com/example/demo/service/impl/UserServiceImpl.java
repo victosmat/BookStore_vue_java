@@ -71,11 +71,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userID).get();
     }
 
-    @Override
-    public Boolean checkUser(String username, String password) {
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account != null && account.getPassword().compareTo(password) == 0) return true;
-        return false;
+    public User checkUser(Account account) {
+        Account account1 = accountRepository.getAccountByUsername(account.getUsername());
+        if (account1 != null) {
+            if (account1.getPassword().equals(account.getPassword())) {
+                return userRepository.findUserByAccount(account1);
+            }
+        }
+        return null;
     }
 
     @Override

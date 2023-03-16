@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.Book;
 import com.example.demo.entity.User;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT e FROM User e")
     List<User> findUsers(Pageable pageable);
+
+    User findUserByAccount(Account account1);
 }
