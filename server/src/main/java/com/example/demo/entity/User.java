@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +21,7 @@ public class User {
     private String name;
 
     @Column(name = "date_of_birth")
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(name = "phone_number")
     private String phoneNumber;

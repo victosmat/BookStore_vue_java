@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping("/User")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User user1 = userService.addUser(user);
-        if (user.getId() == user1.getId())
+        if (user1.getId() == 0)
             return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
         else return new ResponseEntity<>(user1, HttpStatus.OK);
     }
