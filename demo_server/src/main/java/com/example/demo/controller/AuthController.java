@@ -6,7 +6,7 @@ import com.example.demo.jwt.JwtAuthenticationFilter;
 import com.example.demo.jwt.JwtTokenProvider;
 import com.example.demo.payLoad.LoginRequest;
 import com.example.demo.payLoad.LoginResponse;
-import com.example.demo.payLoad.RandomStuff;
+import com.example.demo.payLoad.MessageResponse;
 import com.example.demo.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -51,7 +51,7 @@ public class AuthController {
 
     // Api /api/random yêu cầu phải xác thực mới có thể request
     @GetMapping("/random")
-    public RandomStuff randomStuff() {
-        return new RandomStuff("JWT Hợp lệ mới có thể thấy được message này");
+    public MessageResponse randomStuff() {
+        return new MessageResponse("JWT Hợp lệ mới có thể thấy được message này");
     }
 }

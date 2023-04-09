@@ -17,7 +17,6 @@ public interface UserService {
 
     User deleteUser(Integer userID);
 
-    User checkUser(Account account);
 
     int getPageNumber(int pageSize);
 }

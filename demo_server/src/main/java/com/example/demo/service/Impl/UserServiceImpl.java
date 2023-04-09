@@ -5,6 +5,7 @@ import com.example.demo.entity.Cart;
 import com.example.demo.entity.User;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.CartRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,6 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    //    @Autowired
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
     private final CartRepository cartRepository;
@@ -68,16 +68,6 @@ public class UserServiceImpl implements UserService {
     public User deleteUser(Integer userID) {
         userRepository.deleteById(userID);
         return userRepository.findById(userID).get();
-    }
-
-    public User checkUser(Account account) {
-        Account account1 = accountRepository.getAccountByUsername(account.getUsername());
-        if (account1 != null) {
-            if (account1.getPassword().equals(account.getPassword())) {
-                return userRepository.findUserByAccount(account1);
-            }
-        }
-        return null;
     }
 
     @Override
