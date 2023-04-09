@@ -1,6 +1,6 @@
 package com.example.demo.jwt;
 
-import com.example.demo.service.UserService;
+import com.example.demo.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtTokenProvider tokenProvider;
 
     @Autowired
-    private UserService customUserDetailsService;
+    private AuthService customUserDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // Lấy id user từ chuỗi jwt
                 Long userId = tokenProvider.getUserIdFromJWT(jwt);
                 // Lấy thông tin người dùng từ id
-                UserDetails userDetails = customUserDetailsService.loadUserById(userId);
+                UserDetails userDetails = customUserDetailsService.loadUserById(Integer.parseInt(userId.toString()));
                 if (userDetails != null) {
                     // Nếu người dùng hợp lệ, set thông tin cho Seturity Context
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api")
-public class DemoRestController {
+public class AuthController {
 
     @Autowired
     AuthenticationManager authenticationManager;
