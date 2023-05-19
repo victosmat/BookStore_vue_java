@@ -3,21 +3,31 @@ package com.example.demo.service.Impl;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.User;
+import com.example.demo.jwt.JwtTokenProvider;
+import com.example.demo.payLoad.dto.AuthDTO;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.CartRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
     private final CartRepository cartRepository;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private WebClient webClient;
 
     public UserServiceImpl(UserRepository userRepository, AccountRepository accountRepository, CartRepository cartRepository) {
         this.userRepository = userRepository;
@@ -74,5 +84,21 @@ public class UserServiceImpl implements UserService {
     public int getPageNumber(int pageSize) {
         List<User> users = userRepository.findAll();
         return (int) Math.ceil((float) users.size() / pageSize);
+    }
+
+    @Override
+    public AuthDTO validateToken(String token) {
+        if (!jwtTokenProvider.validateToken(token))
+            throw new RuntimeException("Invalid JWT token");
+
+        Optional<User> userOptional = userRepository.findById(jwtTokenProvider.getUserIdFromJWT(token));
+
+        if (userOptional.isEmpty()) {
+//            throw new AppException("User not found", HttpStatus.NOT_FOUND);
+            throw new RuntimeException("User not found");
+        }
+
+        User user = userOptional.get();
+        return new AuthDTO(user.getId(), user.getAccount().getUsername(), token);
     }
 }

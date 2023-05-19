@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.User;
+import com.example.demo.payLoad.dto.AuthDTO;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface UserService {
 
 
     int getPageNumber(int pageSize);
+
+    AuthDTO validateToken(String token);
 }
